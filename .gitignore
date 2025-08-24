@@ -1,7 +1,7 @@
 *.env
 yolov8n.pt
 serviceAccountKey.json
-
+datasetkytu/
 # Virtual environment
 .venv/
 env/
