@@ -5,7 +5,7 @@ from hander_QR import scan_qr_code
 import firebase_admin
 from firebase_admin import credentials, firestore, messaging
 
-cred = credentials.Certificate("D:/TramRaVao/metricLearning/.venv/serviceAccountKey.json")
+cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
