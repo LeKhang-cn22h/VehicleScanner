@@ -13,4 +13,3 @@ firebase-admin
 requests
 pytz
 pyzbar
-p
