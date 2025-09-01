@@ -5,8 +5,8 @@ from firebase_hander import create_time_expired
 import requests
 import uuid
 import pytz
-import os
-from dotenv import load_dotenv
+import json
+
 import tkinter as tk
 from nhan_dien_vao import detect_license_plate
 from firebase_hander import get_field_from_all_docs
@@ -136,7 +136,11 @@ print("Biển số quét được:", bien_so_quet)
 ds_bien_so_raw = get_field_from_all_docs("thongtindangky", "biensoxe")
 ds_map_bien_so_phu_raw = get_field_from_all_docs("thongtindangky", "biensophu")
 ds_bien_so_khach_raw = get_field_from_all_docs("thongtinkhach", "bienso")
-ds_bien_so_phu_raw = [item["bienSo"] for item in ds_map_bien_so_phu_raw if "bienSo" in item]
+if ds_map_bien_so_phu_raw:
+    ds_bien_so_phu_raw = [item["bienSo"] for item in ds_map_bien_so_phu_raw if "bienSo" in item]
+else:
+    ds_bien_so_phu_raw = []
+
 ds_bien_so = [normalize_plate(val) for val in ds_bien_so_raw if val]
 ds_bien_so_phu = [normalize_plate(val) for val in ds_bien_so_phu_raw if val]
 ds_bien_so_khach = [normalize_plate(val) for val in ds_bien_so_khach_raw if val]
