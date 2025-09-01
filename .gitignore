@@ -25,3 +25,6 @@ dist/
 *.tmp
 *.swp
 
+**/dataset/
+**/Datasets/
+

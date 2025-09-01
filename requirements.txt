@@ -1,4 +1,4 @@
-.\.venv\Scripts\Activate.ps1
+
 --extra-index-url https://download.pytorch.org/whl/cu118
 numpy==1.26.4
 opencv-python
@@ -13,3 +13,4 @@ firebase-admin
 requests
 pytz
 pyzbar
+p
