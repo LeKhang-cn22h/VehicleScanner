@@ -41,8 +41,6 @@ def get_field_from_all_docs(collection_name, field_name):
             print(f"Document {doc.id} không có field {field_name}")
 
     return field_values
-
-
 # Sử dụng hàm
 collection_name = "thongtindangky"  # Thay bằng tên collection của bạn
 field_name = "biensoxe"
