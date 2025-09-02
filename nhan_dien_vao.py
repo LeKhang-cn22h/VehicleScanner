@@ -11,9 +11,11 @@ import numpy as np
 import easyocr
 from collections import Counter
 import time
+from tkinter import Tk, filedialog
 
-
+# =========================
 # Load biến môi trường
+# =========================
 load_dotenv()
 
 # Cấu hình Cloudinary
@@ -87,52 +89,79 @@ def upload_image_to_cloudinary(image_path):
         return None
 
 def fix_common_ocr_mistakes(text):
-    corrections = {'I':'1','|':'1','O':'0','Q':'0','S':'5'}
+    corrections = {'I':'1','|':'1','O':'0','Q':'0'}
     for wrong, right in corrections.items():
         text = text.replace(wrong, right)
     return text
 
+# =========================
+# Nhận diện ký tự bằng CNN
+# =========================
 def recognize_plate_by_cnn(plate_img, show_on_plate=True):
-    gray = cv2.cvtColor(plate_img, cv2.COLOR_BGR2GRAY)
-    _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY_INV)
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
-    thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+    # Detect ký tự bằng YOLO
+    char_detector = YOLO(r"trainVungKyTu/runs/detect/train/weights/best.pt")
 
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    char_boxes = [(x, y, w, h) for cnt in contours for x, y, w, h in [cv2.boundingRect(cnt)] if h > 20 and w > 10]
 
+    results = char_detector.predict(plate_img, conf=0.5, verbose=False)
+
+    if not results or len(results[0].boxes) == 0:
+        return None
+
+    char_boxes = []
+    for box in results[0].boxes:
+        x1, y1, x2, y2 = map(int, box.xyxy[0].cpu().numpy())
+        w = x2 - x1
+        h = y2 - y1
+
+        # Loại bỏ box quá dẹt (nghi là gạch ngang)
+        if h / w < 0.25:  # ngưỡng bạn có thể chỉnh (0.2 ~ 0.3)
+            continue
+
+        char_boxes.append((x1, y1, x2, y2))
+
+    #
+    # char_boxes = []
+    # for box in results[0].boxes:
+    #     x1, y1, x2, y2 = map(int, box.xyxy[0].cpu().numpy())
+    #     char_boxes.append((x1, y1, x2, y2))
+
+    # Nếu không có box nào
     if not char_boxes:
         return None
 
-    # Sắp xếp ký tự
-    total_width = max(x + w for x, y, w, h in char_boxes) - min(x for x, y, w, h in char_boxes)
-    total_height = max(y + h for x, y, w, h in char_boxes) - min(y for x, y, w, h in char_boxes)
+    # --- Sắp xếp ký tự ---
+    total_width = max(b[2] for b in char_boxes) - min(b[0] for b in char_boxes)
+    total_height = max(b[3] for b in char_boxes) - min(b[1] for b in char_boxes)
+
     if total_width / total_height > 2:
+        # 1 hàng ngang → sort theo x
         char_boxes.sort(key=lambda b: b[0])
     else:
+        # 2 hàng dọc → sort theo y rồi tách upper/lower
         char_boxes.sort(key=lambda b: b[1])
-        median_y = np.median([y for _, y, _, _ in char_boxes])
+        median_y = np.median([y1 for _, y1, _, _ in char_boxes])
         upper = sorted([b for b in char_boxes if b[1] < median_y], key=lambda b: b[0])
         lower = sorted([b for b in char_boxes if b[1] >= median_y], key=lambda b: b[0])
         char_boxes = upper + lower
 
+    # --- Nhận dạng ký tự bằng CNN ---
     plate_text = ""
     plate_display = plate_img.copy()
+    gray = cv2.cvtColor(plate_img, cv2.COLOR_BGR2GRAY)
 
-    for idx, (x, y, w, h) in enumerate(char_boxes):
-        char_img = gray[y:y+h, x:x+w]
+    for (x1, y1, x2, y2) in char_boxes:
+        char_img = gray[y1:y2, x1:x2]
         char_pred = predict_char(char_img)
         char_pred = fix_common_ocr_mistakes(char_pred)
         plate_text += char_pred
 
         if show_on_plate:
-            # Vẽ chữ CNN lên trên ảnh biển số
-            cv2.rectangle(plate_display, (x,y), (x+w, y+h), (0,255,0), 1)
-            cv2.putText(plate_display, char_pred, (x, y-5),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
+            cv2.rectangle(plate_display, (x1, y1), (x2, y2), (0, 255, 0), 1)
+            cv2.putText(plate_display, char_pred, (x1, y1 - 5),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
     if show_on_plate:
-        cv2.imshow("CNN Characters on Plate", plate_display)
+        cv2.imshow("YOLO+CNN Characters on Plate", plate_display)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -146,67 +175,137 @@ def recognize_plate_by_ensemble(plate_img):
     easy_text = recognize_by_easyocr(plate_img)
     if easy_text: results.append(easy_text)
 
-
     print("🔍 CNN:", cnn_text, "| EasyOCR:", easy_text)
     if not results:
         return None
     return Counter(results).most_common(1)[0][0]
 
 # =========================
-# Nhận diện biển số qua webcam
+# Nhận diện biển số qua Webcam
 # =========================
+from tkinter import Tk, filedialog
+
 def detect_license_plate():
+    # Mở hộp thoại chọn file ảnh
+    root = Tk()
+    root.withdraw()
+    root.lift()
+    root.attributes('-topmost', True)
+    file_path = filedialog.askopenfilename(
+        title="Chọn ảnh biển số",
+        filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")]
+    )
+
+    if not file_path:
+        print(" Không chọn file.")
+        return None, None
+
+    # Đọc ảnh từ file
+    frame = cv2.imread(file_path)
     model = YOLO("runs/detect/train/weights/best.pt")
-    cap = cv2.VideoCapture(0)
+
+    results = model(frame, device=0)
+    best_conf = 0
+    best_plate = None
+    best_frame = None
+
+    for r in results:
+        for box in (r.boxes or []):
+            conf = box.conf[0].item()
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            if conf > 0.6:  # Ngưỡng tự tin
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                if conf > best_conf:
+                    best_conf = conf
+                    best_frame = frame.copy()
+                    best_plate = frame[y1:y2, x1:x2]
+
+    if best_plate is None:
+        print("❌ Không phát hiện được biển số.")
+        return None, None
+
+    # Nhận diện biển số
+    recognized_plate_text = recognize_plate_by_ensemble(best_plate)
+    print("Biển số quét được:", recognized_plate_text)
+
+    # Upload ảnh lên Cloudinary
+    url_image_vao = upload_image_to_cloudinary(file_path)
+
+    # Hiển thị kết quả
+    display_img = best_frame.copy()
+    cv2.putText(display_img, recognized_plate_text, (10, 50),
+                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 3)
+    cv2.imshow("Kết quả nhận diện", display_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    return recognized_plate_text, url_image_vao
+
+# =========================
+# Nhận diện biển số từ File Explorer
+# =========================
+def detect_from_file():
+    root = Tk()
+    root.withdraw()
+
+    file_path = filedialog.askopenfilename(
+        title="Chọn ảnh biển số",
+        filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")]
+    )
+    if not file_path:
+        print("❌ Bạn chưa chọn ảnh nào")
+        return None, None
+
+    frame = cv2.imread(file_path)
+    if frame is None:
+        print("Không đọc được ảnh:", file_path)
+        return None, None
+
+    model = YOLO("runs/detect/train/weights/best.pt")
+    results = model(frame, device=0)
 
     best_conf = 0
-    best_frame = None
     best_plate = None
-    last_ocr_time = time.time()
+    for r in results:
+        for box in (r.boxes or []):
+            conf = box.conf[0].item()
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            if conf > 0.6:
+                cv2.rectangle(frame, (x1,y1),(x2,y2),(0,255,0),2)
+                if conf > best_conf:
+                    best_conf = conf
+                    best_plate = frame[y1:y2, x1:x2]
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+    if best_plate is None:
+        print("❌ Không tìm thấy biển số trong ảnh.")
+        return None, None
 
-        results = model(frame, device=0)
-        for r in results:
-            for box in (r.boxes or []):
-                conf = box.conf[0].item()
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
-                if conf > 0.8:
-                    cv2.rectangle(frame, (x1,y1),(x2,y2),(0,255,0),2)
-                    if conf > best_conf:
-                        best_conf = conf
-                        best_frame = frame.copy()
-                        best_plate = frame[y1:y2, x1:x2]
+    recognized_plate_text = recognize_plate_by_ensemble(best_plate)
+    print(" Biển số nhận được:", recognized_plate_text)
 
-        cv2.imshow("Nhan Dien Bien So", frame)
-        current_time = time.time()
-        if best_conf > 0.6 and best_plate is not None and (current_time - last_ocr_time >= 15):
-            last_ocr_time = current_time
-            plate_filename = "bien_so_xe_vao.jpg"
-            cv2.imwrite(plate_filename, best_frame)
-            url_image_vao = upload_image_to_cloudinary(plate_filename)
+    url_image = upload_image_to_cloudinary(file_path)
 
-            recognized_plate_text = recognize_plate_by_ensemble(best_plate)
-            print("Biển số quét được:", recognized_plate_text)
+    display_img = frame.copy()
+    cv2.putText(display_img, recognized_plate_text, (10,50),
+                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,0,255), 3)
+    # Giữ tỉ lệ ảnh nhưng giới hạn chiều rộng hoặc chiều cao
 
-            display_img = best_frame.copy()
-            cv2.putText(display_img, recognized_plate_text, (10,50),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,0,255), 3)
-            cv2.imshow("Result", display_img)
-            winsound.Beep(1000, 500)
 
-            if os.path.exists(plate_filename):
-                os.remove(plate_filename)
 
-            cv2.waitKey(0)
-            break
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
 
-    cap.release()
+    # cv2.imshow("Result", display_img)
+    cv2.waitKey(0)
     cv2.destroyAllWindows()
-    return recognized_plate_text, url_image_vao
+
+    return recognized_plate_text, url_image
+
+# =========================
+# Main
+# =========================
+if __name__ == "__main__":
+    # mode = input("Chọn chế độ (1=Webcam, 2=Ảnh từ File Explorer): ")
+    # if mode == "1":
+    #     detect_license_plate()
+    # else:
+    detect_from_file()
