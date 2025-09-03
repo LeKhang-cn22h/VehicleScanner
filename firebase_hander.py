@@ -1,11 +1,19 @@
 from _datetime import timedelta
 from datetime import datetime
-from firebase_admin import firestore
+
+import os
 import firebase_admin
+from firebase_admin import credentials, firestore
+
+# Lấy thư mục gốc của file firebase_hander.py
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Ghép đường dẫn tuyệt đối tới serviceAccountKey.json
+cred_path = os.path.join(BASE_DIR, "serviceAccountKey.json")
 
 # Khởi tạo Firebase App (nếu chưa có)
 if not firebase_admin._apps:
-    cred = firebase_admin.credentials.Certificate("serviceAccountKey.json")
+    cred = credentials.Certificate(cred_path)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()

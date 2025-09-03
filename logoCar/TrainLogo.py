@@ -1,35 +1,59 @@
 import cv2
 from ultralytics import YOLO
+from tkinter import filedialog, Tk
 
-# Load model đã train
-model = YOLO("runs/detect/train5/weights/best.pt")
-# model = YOLO("runs/car_plate2/weights/best.pt")
+# =========================
+# 1. Hàm chọn file ảnh
+# =========================
+def choose_image():
+    root = Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename(
+        title="Chọn ảnh",
+        filetypes=[("Image files", "*.jpg *.jpeg *.png")]
+    )
+    return file_path
 
-# Mở camera (0 = mặc định, nếu không chạy thì thử 1,2,...)
-cap = cv2.VideoCapture(0)
+# =========================
+# 2. Load YOLO model
+# =========================
+yolo_model = YOLO("runs/detect/train5/weights/best.pt")
 
-if not cap.isOpened():
-    print("❌ Không mở được camera. Hãy thử đổi source thành 1 hoặc 2.")
-    exit()
+# =========================
+# 3. Hàm detect và crop logo
+# =========================
+def detect_and_crop_logo(image_path):
+    img = cv2.imread(image_path)
+    results = yolo_model(img)
 
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("❌ Không đọc được frame từ camera")
-        break
+    for r in results:
+        boxes = r.boxes.xyxy.cpu().numpy()
+        cls = r.boxes.cls.cpu().numpy()
+        names = yolo_model.names  # tên class khi train YOLO
 
-    # Chạy nhận diện với YOLO
-    results = model(frame)
+        if len(boxes) > 0:
+            # chọn box lớn nhất
+            areas = [(x2 - x1) * (y2 - y1) for x1, y1, x2, y2 in boxes]
+            idx = areas.index(max(areas))
 
-    # Vẽ kết quả trực tiếp lên frame
-    annotated_frame = results[0].plot()
+            x1, y1, x2, y2 = map(int, boxes[idx])
+            cropped = img[y1:y2, x1:x2]
 
-    # Hiển thị
-    cv2.imshow("YOLOv8 Camera Demo", annotated_frame)
+            class_id = int(cls[idx])
+            label = names[class_id]
 
-    # Bấm 'q' để thoát
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+            # Hiển thị kết quả
+            print(f"Logo phát hiện: {label}")
+            cv2.imshow("Logo Crop", cropped)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+            return label, cropped
 
-cap.release()
-cv2.destroyAllWindows()
+    print("❌ Không phát hiện logo nào")
+    return None, None
+
+# =========================
+# 4. Chạy thử
+# =========================
+img_path = choose_image()
+label, cropped = detect_and_crop_logo(img_path)

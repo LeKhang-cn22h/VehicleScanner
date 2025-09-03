@@ -13,3 +13,5 @@ firebase-admin
 requests
 pytz
 pyzbar
+scikit-learn
+webcolors==1.11.1

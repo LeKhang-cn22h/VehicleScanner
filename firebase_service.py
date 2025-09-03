@@ -1,12 +1,17 @@
 from firebase_admin import credentials, db
 import firebase_admin
+import os
 
 class FirebaseService:
     def __init__(self):
         if not firebase_admin._apps:
-            cred = credentials.Certificate("serviceAccountKey.json")
+            # Lấy đường dẫn tuyệt đối tới file json cùng cấp
+            dir_path = os.path.dirname(os.path.abspath(__file__))
+            cred_path = os.path.join(dir_path, "serviceAccountKey.json")
+
+            cred = credentials.Certificate(cred_path)
             firebase_admin.initialize_app(cred, {
-                'databaseURL': 'https://tramxeuth-default-rtdb.firebaseio.com/'  # sửa lại đúng URL
+                'databaseURL': 'https://tramxeuth-default-rtdb.firebaseio.com/'
             })
 
     def get_all_license_plates(self):
@@ -24,7 +29,7 @@ class FirebaseService:
         ref = db.reference(f'biensotrongbai/{plate}')
         return ref.get()
 
-    def update_license_plate_field(self, value):
+    def update_license_plate_field(self, plate,value):
 
         ref = db.reference(f'trangthaicong')  # ✅ Cùng cấp với biensotrongbai
         ref.set(value)

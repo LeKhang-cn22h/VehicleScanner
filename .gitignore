@@ -1,5 +1,6 @@
 *.env
 yolov8n.pt
+
 serviceAccountKey.json
 datasetkytu/
 # Virtual environment
@@ -24,7 +25,7 @@ dist/
 # Temporary files
 *.tmp
 *.swp
-
+**/yolov8n.pt
 **/dataset/
 **/Datasets/
 .idea/
