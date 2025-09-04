@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55f49ab4-85dd-4c5d-bddc-55d44fc1defc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/XeMay/giaoDienXeMay.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/XeMay/nhanDien.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/XeMay/xeRa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/XeMay/xeVao.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mauXe/mauChuDaoXeOto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xeoto/ketQuaXeOto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xeoto/nhanDien.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xeoto/xeRa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xeoto/xeVao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xeoto/giaoDienXeOto.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xeoto/ketQuaXeOtoRa.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloudinary_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cloudinary_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/face_detection/train_face.py" beforeDir="false" afterPath="$PROJECT_DIR$/face_detection/train_face.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebase_hander.py" beforeDir="false" afterPath="$PROJECT_DIR$/firebase_hander.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebase_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/firebase_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logoCar/TrainLogo.py" beforeDir="false" afterPath="$PROJECT_DIR$/logoCar/TrainLogo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nhan_dien_vao.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhan_dien_vao.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_siamese/test_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainVungKyTu/yolo11n.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_seamese.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_siamese/train_seamese.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XeMay/giaoDienXeMay.py" beforeDir="false" afterPath="$PROJECT_DIR$/XeMay/giaoDienXeMay.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/ketQuaXeOto.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/ketQuaXeOtoVao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/xeRa.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/xeRa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/xeVao.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/xeVao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -25,8 +25,8 @@ window.title("Bãi giữ xe thông minh")
 window.geometry("300x250")
 
 # --- Nút bấm ---
-btn1 = tk.Button(window, text="quét xe máy vào", command=partial(run_file, "xeVao.py"), width=25, height=2)
-btn2 = tk.Button(window, text="Quét xe máy ra", command=partial(run_file, "xeRa.py"), width=25, height=2)
+btn1 = tk.Button(window, text="quét xe oto vào", command=partial(run_file, "xeVao.py"), width=25, height=2)
+btn2 = tk.Button(window, text="Quét xe oto ra", command=partial(run_file, "xeRa.py"), width=25, height=2)
 
 
 btn1.pack(pady=10)

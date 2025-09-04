@@ -10,7 +10,7 @@ import time
 
 from nhanDien import detect_license_plate
 from firebase_hander import get_field_from_all_docs
-from  ketQuaXeOto import process_car_image
+from  ketQuaXeOtoVao import process_car_image
 
 FIREBASE_REALTIME_URL = 'https://tramxeuth-default-rtdb.firebaseio.com'
 cred = credentials.Certificate("../serviceAccountKey.json")
@@ -75,8 +75,6 @@ def run_license_scan(label_status, root_window):
                 "biensoxevao": url_image_detected,   # ảnh detect biển số
                 "hinhxevao": link_goc,               # ảnh gốc xe upload Cloudinary
                 "logovao": link_crops,               # danh sách crop logo
-                "mauxechudaovao": mau,               # màu chủ đạo xe
-                "mauxechudaora": None,
                 "logora": None,
                 "timeout": None,
                 "biensoxera": None,
