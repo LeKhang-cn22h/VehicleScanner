@@ -53,7 +53,7 @@ def run_license_scan(label_status, root_window):
         hop_le_phu = bien_so_quet in ds_bien_so_phu
 
         if hop_le or hop_le_phu:
-            label_status.config(text=f"Biển số {bien_so_quet} hợp lệ ✅", bg="green")
+            label_status.config(text=f"Biển số {bien_so_quet} hợp lệ ", bg="green")
 
             # Ghi Firestore
             today = datetime.today().strftime("%d%m%Y")
@@ -101,7 +101,7 @@ def run_license_scan(label_status, root_window):
             break  # thoát vòng lặp
 
         else:
-            label_status.config(text=f"Biển số {bien_so_quet} không hợp lệ ❌", bg="red")
+            label_status.config(text=f"Biển số {bien_so_quet} không hợp lệ ", bg="red")
             firebase_put("trangthaicong", False, include_timestamp=False)
 
         label_status.update()
