@@ -14,15 +14,9 @@ cloudinary.config(
     api_secret=os.getenv('CLOUD_API_SECRET')
 )
 
-def upload_image_to_cloudinary(image_path):
-    """
-    Tải ảnh lên Cloudinary và trả về URL ảnh.
-    :param image_path: đường dẫn ảnh trên máy local.
-    :return: URL ảnh trên Cloudinary nếu thành công, None nếu lỗi.
-    """
-    try:
-        result = cloudinary.uploader.upload(image_path)
-        return result.get("secure_url")
-    except Exception as e:
-        print(f"❌ Lỗi khi upload ảnh: {e}")
-        return None
+def upload_image_to_cloudinary(image_path, folder=None):
+    options = {}
+    if folder:
+        options["folder"] = folder
+    return cloudinary.uploader.upload(image_path, **options)
+
