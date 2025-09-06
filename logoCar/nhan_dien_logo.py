@@ -6,7 +6,7 @@ def train_model():
 
     # Train trên GPU (ép device=0)
     results = model.train(
-        data="D:/TramRaVao/BaiGiuXe/VehicleScanner/logoCar/Datasets/data.yaml",
+        data="logoCar/Datasets/data.yaml",
         epochs=100,
         imgsz=640,
         device=0
