@@ -31,7 +31,7 @@ def on_closing():
 # Tạo cửa sổ chính
 window = tk.Tk()
 window.title("Bãi giữ xe thông minh")
-window.geometry("300x200")
+window.geometry("300x300")
 
 window.protocol("WM_DELETE_WINDOW", on_closing)
 

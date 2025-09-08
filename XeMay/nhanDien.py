@@ -68,8 +68,8 @@ print("✅ Loaded CNN model (PyTorch)")
 # OCR Tools
 # =========================
 reader = easyocr.Reader(['en'])
-char_detector = YOLO(r"../trainVungKyTu/runs/detect/train/weights/best.pt")
-plate_detector = YOLO("../runs/detect/train/weights/best.pt")
+char_detector = YOLO("trainVungKyTu/runs/detect/train/weights/best.pt")
+plate_detector = YOLO("runs/detect/train/weights/best.pt")
 
 def recognize_by_easyocr(plate_img):
     results = reader.readtext(plate_img)
@@ -184,13 +184,13 @@ def detect_license_plate():
 
     if best_plate is None:
         print("❌ Không tìm thấy biển số trong ảnh.")
-        return None, None
+        return None, None, file_path, best_plate
 
     recognized_plate_text = recognize_plate_by_ensemble(best_plate)
     print("Biển số nhận được:", recognized_plate_text)
 
     url_image = upload_image_to_cloudinary(file_path)
-    return recognized_plate_text, url_image
+    return recognized_plate_text, url_image, file_path, best_plate
 
 # =========================
 # Main

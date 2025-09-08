@@ -14,7 +14,9 @@ cred_path = os.path.join(BASE_DIR, "serviceAccountKey.json")
 # Khởi tạo Firebase App (nếu chưa có)
 if not firebase_admin._apps:
     cred = credentials.Certificate(cred_path)
-    firebase_admin.initialize_app(cred)
+    firebase_admin.initialize_app(cred,{
+                'databaseURL': 'https://tramxeuth-default-rtdb.firebaseio.com/'
+            })
 
 db = firestore.client()
 

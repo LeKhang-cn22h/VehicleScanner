@@ -4,6 +4,7 @@ import sys
 import json
 from functools import partial
 
+
 # --- Đọc file state.json nếu cần ---
 try:
     with open("state.json", "r") as f:
@@ -22,13 +23,13 @@ def run_file(file_path):
 # --- Tạo cửa sổ chính ---
 window = tk.Tk()
 window.title("Bãi giữ xe thông minh")
-window.geometry("300x250")
 
 # --- Nút bấm ---
 btn1 = tk.Button(window, text="quét xe máy vào", command=partial(run_file, "xeVao.py"), width=25, height=2)
+btn1.grid(row=0, column=0, padx=10, pady=10)
+
 btn2 = tk.Button(window, text="Quét xe máy ra", command=partial(run_file, "xeRa.py"), width=25, height=2)
+btn2.grid(row=0, column=1, padx=10, pady=10)
 
-
-btn1.pack(pady=10)
-btn2.pack(pady=10)
+window.state('zoomed')
 window.mainloop()

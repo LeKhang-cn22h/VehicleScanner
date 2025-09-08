@@ -10,7 +10,26 @@ def normalize_plate(plate):
         return None
     return plate.replace(".", "").upper()
 
-# Quét biể
+# Trừ số lượt khi ra
+def update_soluot_khira(bien_so_xe):
+    db = firestore.client()
+    doc_col = db.collection("thongtindangky")
+    xe_doc_ref = doc_col.get()
+    for xe_doc in xe_doc_ref:
+        xe_data = xe_doc.to_dict()
+        ds_bien_so_xe = [xe_doc['biensoxe'], xe_doc['biensophu']['bienSo']]
+        if bien_so_xe in ds_bien_so_xe:
+            so_luot_moi = xe_data['luot'] - 1
+            if so_luot_moi >= 0:
+                update_xe_doc_ref = doc_col.document(xe_doc.id)
+                update_xe_doc_ref.update({"luot":so_luot_moi})
+                return True
+            else:
+                print("Số lượt ko đủ. Bạn cần mua thêm lượt")
+                return False
+    return False
+
+# Quét biển
 bien_so, url_image_detected = detect_license_plate()
 bien_so_quet = normalize_plate(bien_so)
 

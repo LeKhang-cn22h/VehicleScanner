@@ -10,6 +10,7 @@ import easyocr
 from collections import Counter
 from dotenv import load_dotenv
 from tkinter import Tk, filedialog
+import requests
 
 # =========================
 # Load biến môi trường
@@ -68,8 +69,8 @@ print("✅ Loaded CNN model (PyTorch)")
 # OCR Tools
 # =========================
 reader = easyocr.Reader(['en'])
-char_detector = YOLO(r"../trainVungKyTu/runs/detect/train/weights/best.pt")
-plate_detector = YOLO("../runs/detect/train/weights/best.pt")
+char_detector = YOLO("trainVungKyTu/runs/detect/train/weights/best.pt")
+plate_detector = YOLO("train_bsx/runs/train/plate_detect4/weights/best.pt")
 
 def recognize_by_easyocr(plate_img):
     results = reader.readtext(plate_img)
@@ -158,18 +159,35 @@ def recognize_plate_by_ensemble(plate_img):
 # =========================
 # Nhận diện biển số từ File Explorer
 # =========================
-def detect_license_plate():
-    root = Tk()
-    root.withdraw()
-    file_path = filedialog.askopenfilename(
-        title="Chọn ảnh biển số",
-        filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")]
-    )
+def detect_license_plate(file_path=None):
+    if not file_path:
+        root = Tk()
+        root.withdraw()
+        file_path = filedialog.askopenfilename(
+            title="Chọn ảnh biển số",
+            filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp")]
+        )
+
     if not file_path:
         print("❌ Bạn chưa chọn ảnh nào")
-        return None, None
+        return None, None, file_path, None
 
-    frame = cv2.imread(file_path)
+    if file_path.startswith("http://") or file_path.startswith("https://"):
+        # Đọc ảnh từ URL
+        response = requests.get(file_path, stream=True)
+        if response.status_code != 200:
+            print("❌ Không tải được ảnh từ URL")
+            return None, None, file_path, None
+        img_array = np.asarray(bytearray(response.content), dtype=np.uint8)
+        frame = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+    else:
+        # Đọc ảnh từ ổ đĩa
+        frame = cv2.imread(file_path)
+
+    if frame is None:
+        print("❌ Không đọc được ảnh.")
+        return None, None, file_path, None
+
     results = plate_detector(frame, device=0)
 
     best_conf = 0
@@ -184,13 +202,18 @@ def detect_license_plate():
 
     if best_plate is None:
         print("❌ Không tìm thấy biển số trong ảnh.")
-        return None, None
+        return None, None, file_path, best_plate
 
     recognized_plate_text = recognize_plate_by_ensemble(best_plate)
     print("Biển số nhận được:", recognized_plate_text)
 
-    url_image = upload_image_to_cloudinary(file_path)
-    return recognized_plate_text, url_image
+    # Nếu là URL thì upload trực tiếp URL, còn file thì upload từ file
+    if file_path.startswith("http://") or file_path.startswith("https://"):
+        url_image = file_path  # Ảnh đã là URL rồi
+    else:
+        url_image = upload_image_to_cloudinary(file_path)
+
+    return recognized_plate_text, url_image, file_path, best_plate
 
 # =========================
 # Main

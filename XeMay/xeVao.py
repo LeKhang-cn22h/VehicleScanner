@@ -1,4 +1,6 @@
 import firebase_admin
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from firebase_admin import credentials, firestore
 from datetime import datetime
 from firebase_hander import create_time_expired
@@ -13,7 +15,7 @@ from firebase_hander import get_field_from_all_docs
 from face_detection.train_face import capture_face_and_upload
 
 FIREBASE_REALTIME_URL = 'https://tramxeuth-default-rtdb.firebaseio.com'
-cred = credentials.Certificate("../serviceAccountKey.json")
+cred = credentials.Certificate("serviceAccountKey.json")
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -37,7 +39,7 @@ def firebase_put(path, data, include_timestamp=True):
 
 def run_license_scan(label_status, root_window):
     while True:
-        bien_so, url_image_detected = detect_license_plate()
+        bien_so, url_image_detected, img_path, best_plate = detect_license_plate()
         bien_so_quet = normalize_plate(bien_so)
         print("Biển số quét được:", bien_so_quet)
 
@@ -66,7 +68,7 @@ def run_license_scan(label_status, root_window):
             xe_doc_ref.set({"solanvao": solanvao + 1}, merge=True)
 
             # Chụp ảnh khuôn mặt
-            image_url_vao = capture_face_and_upload()
+            image_url_vao, image_face_local = capture_face_and_upload()
 
             # Ghi timeline
             time_now = datetime.now().strftime("%H:%M:%S")
@@ -93,31 +95,36 @@ def run_license_scan(label_status, root_window):
                     "timeExpired": create_time_expired(datetime_str)
                 })
 
-            # --- Nếu muốn tự động tắt GUI sau khi hoàn tất ---
-            time.sleep(1)  # delay để thấy thông báo
-            root_window.quit()  # hoặc root_window.destroy()
+            # # --- Nếu muốn tự động tắt GUI sau khi hoàn tất ---
+            # time.sleep(1)  # delay để thấy thông báo
+            # root_window.quit()  # hoặc root_window.destroy()
             break  # thoát vòng lặp
 
         else:
             label_status.config(text=f"Biển số {bien_so_quet} không hợp lệ ❌", bg="red")
             firebase_put("trangthaicong", False, include_timestamp=False)
-
+            # image_face_local = None
+            image_url_vao, image_face_local = capture_face_and_upload()
+            break
         label_status.update()
         time.sleep(1)
+    label_status.update()
+    time.sleep(1)
+    return bien_so_quet, img_path, best_plate, image_face_local
 
 
-# =======================
-# GUI Tkinter
-# =======================
-root = tk.Tk()
-root.title("Hệ thống quản lý xe tự động")
-root.geometry("700x200")
+# # =======================
+# # GUI Tkinter
+# # =======================
+# root = tk.Tk()
+# root.title("Hệ thống quản lý xe tự động")
+# root.geometry("700x200")
 
-label_status = tk.Label(root, text="Đang chờ quét xe...", font=("Arial", 24), width=50, height=5, bg="gray")
-label_status.pack(pady=20)
+# label_status = tk.Label(root, text="Đang chờ quét xe...", font=("Arial", 24), width=50, height=5, bg="gray")
+# label_status.pack(pady=20)
 
-# Thread chạy quét biển số
-threading.Thread(target=run_license_scan, args=(label_status, root), daemon=True).start()
+# # Thread chạy quét biển số
+# threading.Thread(target=run_license_scan, args=(label_status, root), daemon=True).start()
 
-root.mainloop()
+# root.mainloop()
 

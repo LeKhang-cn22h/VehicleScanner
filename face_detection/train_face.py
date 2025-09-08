@@ -52,4 +52,4 @@ def capture_face_and_upload():
 
     cap.release()
     cv2.destroyAllWindows()
-    return result_url
+    return result_url, frame
