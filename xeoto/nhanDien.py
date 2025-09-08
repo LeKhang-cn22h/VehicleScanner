@@ -69,7 +69,7 @@ print("✅ Loaded CNN model (PyTorch)")
 # OCR Tools
 # =========================
 reader = easyocr.Reader(['en'])
-char_detector = YOLO("trainVungKyTu/runs/detect/train/weights/best.pt")
+char_detector = YOLO("trainVungKyTu/runs/detect/train7/weights/best.pt")
 plate_detector = YOLO("train_bsx/runs/train/plate_detect4/weights/best.pt")
 
 def recognize_by_easyocr(plate_img):

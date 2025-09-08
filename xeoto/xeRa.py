@@ -41,7 +41,7 @@ def is_khach_uutien(bien_so_xe):
     xe_doc_ref = doc_col.get()
     for xe_doc in xe_doc_ref:
         xe_data = xe_doc.to_dict()
-        if bien_so_xe == xe_data['bienso']:
+        if bien_so_xe == xe_data.get('bienso') or bien_so_xe == xe_data.get('biensoxe'):
             if xe_data['uutien']:
                 return True
             else:
