@@ -62,8 +62,6 @@ def process_car_image():
 
 
 
-    # Xóa file gốc local (sau khi upload)
-    os.remove(file_path)
 
     # return cho file khác sử dụng
     return original_url, crop_urls, plate_text

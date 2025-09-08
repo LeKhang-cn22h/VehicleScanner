@@ -52,14 +52,12 @@ def process_car_image():
 
     print("Tất cả crop logo đã upload:", crop_urls)
 
-    # ========== Lấy màu chủ đạo của xe ==========
-    colors = get_dominant_car_color(file_path)
-    print("Màu chủ đạo của xe:", colors)
+    # ========== Lấy màu chủ đạo của xe ==========]
 
     # Xóa file gốc local (sau khi upload)
     os.remove(file_path)
 
     # return cho file khác sử dụng
-    return original_url, crop_urls, colors
+    return original_url, crop_urls,
 
 

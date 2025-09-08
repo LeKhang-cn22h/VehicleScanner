@@ -40,3 +40,11 @@ class FirebaseService:
     def delete_license_plate(self, plate):
         ref = db.reference(f'/biensotrongbai/{plate}')
         ref.delete()
+    def has_khach(self, plate) -> bool:
+        """
+        Kiểm tra trong biensotrongbai/{plate} có tồn tại trường 'khach' hay không
+        Trả về True nếu có, False nếu không.
+        """
+        ref = db.reference(f'biensotrongbai/{plate}/khach')
+        data = ref.get()
+        return data is not None

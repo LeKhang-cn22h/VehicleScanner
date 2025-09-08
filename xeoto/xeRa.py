@@ -89,6 +89,8 @@ def run_license_scan(label_status, root):
 
         # 2. Kiểm tra hợp lệ với Firebase (biển số từ detect_license_plate)
         ds_bien_so = firebase_service.get_all_license_plates()
+        print("Biển số quét được:")
+
         if bien_so_quet not in ds_bien_so:
             label_status.config(text=f"Biển số {bien_so_quet} không hợp lệ ", bg="red")
             label_status.update()
@@ -161,7 +163,7 @@ def run_license_scan(label_status, root):
                 logovao = timeline_data.get("logovao")
 
                 print("Hình xe vào:", hinhxevao)
-                print("Lô gô vào:", logovao)
+                print("Logo vào:", logovao)
         else:
             timeline_doc_id = None
             timeline_ref = None
