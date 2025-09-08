@@ -7,7 +7,7 @@ def train_model():
 
     # Train trên GPU (ép device=0)
     results = model.train(
-        data="dataset/data.yaml",
+        data="trainVungKyTu/dataset_split/data.yaml",
         epochs=100,
         imgsz=640,
         device=0
