@@ -151,32 +151,43 @@ def btn_quet_xe_vao():
 def btn_quet_xe_ra():
     result = run_license_scan_ra(window)
 
-    if not result.get("success"):
+    if  result.get("success"):
         label_custom_text(window, "Thông báo", result["message"],
                           row=0, column=2, width=25, height=3,
                           content_color="red")
         return
     if result.get("warning"):
-        data = result["data"]
-        bien_so_quet = data["bien_so"]
-        anh_xe_ra = data["anh_xe_ra"]
+        data = result.get("data", {})
+        bien_so = data.get("bien_so")
+        anh_xe_ra = data.get("anh_xe_ra")  # có thể None nếu chưa ra
+        timeIn = data.get("timeIn")
+        anh_xe_vao = data.get("anh_xe_vao")
+        mat_vao = data.get("mat_vao")
+        timeOut = data.get("time_now")
+        mat_ra = data.get("mat_ra")
 
-        firebase_service = FirebaseService()
-        db = firestore.client()
-        # Hiện label cảnh báo
+        # Load hình luôn, kể cả hết lượt
+        if anh_xe_vao:
+            load_image(canvas_plate_url_vao, img_path=anh_xe_vao)
+        if mat_vao:
+            load_image(canvas_face_url_vao, img_path=mat_vao)
+        if anh_xe_ra:
+            load_image(canvas_plate_url_ra, img_path=anh_xe_ra)
+        if mat_ra:
+            load_image(canvas_face_url_ra, img_path=mat_ra)
+
+        # Hiển thị cảnh báo
         label_custom_text(window, "Thông báo", result["message"],
                           row=0, column=2, width=25, height=3,
                           content_color="red")
 
-        # Hiện hộp thoại Yes/No
-        confirm = messagebox.askyesno("Cảnh báo", result["message"] + "\nBạn có muốn tiếp tục xử lý không?",)
-        print ("debug messagebox")
+        # Hộp thoại Yes/No
+        confirm = messagebox.askyesno("Cảnh báo", result["message"] + "\nBạn có muốn tiếp tục xử lý không?")
         if confirm:
-            # Nếu người dùng chọn Có -> update và delete Firestore
-            firebase_service.update_license_plate_field(bien_so_quet, True)
-            firebase_service.delete_license_plate(bien_so_quet)
+            firebase_service = FirebaseService()
+            firebase_service.update_license_plate_field(bien_so, True)
+            firebase_service.delete_license_plate(bien_so)
 
-        # Xóa thông báo sau 5s
         window.after(5000, clear_data)
         return
 

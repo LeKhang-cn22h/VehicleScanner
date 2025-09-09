@@ -5,11 +5,7 @@ from face_detection.train_face import capture_face_and_upload
 from deepface import DeepFace
 from firebase_admin import firestore
 import time
-import firebase_admin
-from firebase_admin import credentials
-import requests
-import cv2
-import numpy as np
+
 
 def run_license_scan_ra(root):
     firebase_service = FirebaseService()
@@ -157,6 +153,54 @@ def run_license_scan_ra(root):
                 return {"success": False, "message": f"Lỗi khi so khớp khuôn mặt: {e}", "data": None}
 
         if same_person:
+            collection_ref = db.collection("thongtindangky")
+
+            # Truy vấn: lấy doc mà biensoxe hoặc biensophu khớp
+            matched_doc = None
+            docs = collection_ref.where("biensoxe", "==", bien_so_quet).stream()
+            for doc in docs:
+                matched_doc = doc
+                break  # chỉ cần 1 doc khớp
+
+            if not matched_doc:
+                docs_phu = collection_ref.where("biensophu", "==", bien_so_quet).stream()
+                for doc in docs_phu:
+                    matched_doc = doc
+                    break  # chỉ cần 1 doc khớp
+
+            if matched_doc:
+                data = matched_doc.to_dict()
+                # Kiểm tra lượt
+                for key, value in data.items():
+                    if "luot" in key.lower() and isinstance(value, (int, float)) and value <=0:
+                        return {
+                            "warning": True,
+                            "message": "Bạn đã hết lượt mua vé, bạn có muốn trả tiền mặt 1 lượt không",
+                                "data": {
+                        "bien_so": bien_so_quet,
+                        "anh_xe_ra": url_image_detected,
+                        "mat_ra": image_url_new_face,
+                        "timeIn": timeIn,
+                        "anh_xe_vao": url_xevao,
+                        "mat_vao": url_khuonmatvao,
+                        "time_now": datetime.now().strftime("%H:%M:%S")
+                    }}
+
+            return {
+                "success": True,
+                "message": "Xác thực xe bình thường thành công",
+                "data": {
+                    "bien_so": bien_so_quet,
+                    "anh_xe_ra": url_image_detected,
+                    "mat_ra": image_url_new_face,
+                    "timeIn": timeIn,
+                    "anh_xe_vao": url_xevao,
+                    "mat_vao": url_khuonmatvao,
+                    "time_now": datetime.now().strftime("%H:%M:%S")
+                }}
+
+
+
             firebase_service.update_license_plate_field(bien_so_quet, True)
             firebase_service.delete_license_plate(bien_so_quet)
 
