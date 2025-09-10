@@ -37,8 +37,9 @@ def scan_qr_code():
         cv2.imshow("Quét mã QR", frame)
 
         # Thoát thủ công
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            print(" Đã thoát quét QR.")
+        # Kiểm tra nếu người dùng bấm 'q' hoặc đóng cửa sổ (X)
+        if (cv2.waitKey(1) & 0xFF == ord('q')) or cv2.getWindowProperty("Quét mã QR", cv2.WND_PROP_VISIBLE) < 1:
+            print("Đã thoát quét QR.")
             break
 
     cap.release()

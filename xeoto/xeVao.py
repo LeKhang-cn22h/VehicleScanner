@@ -12,13 +12,13 @@ import time
 import json
 import uuid
 from google.cloud.firestore import Client
-from nhanDien import detect_license_plate
+from xeoto.nhanDien import detect_license_plate
 from firebase_hander import get_field_from_all_docs
-from  ketQuaXeOtoVao import process_car_image
-import utils
+from  xeoto.ketQuaXeOtoVao import process_car_image
+import xeoto.utils as utils
 
 FIREBASE_REALTIME_URL = 'https://tramxeuth-default-rtdb.firebaseio.com'
-cred = credentials.Certificate("../serviceAccountKey.json")
+cred = credentials.Certificate("serviceAccountKey.json")
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -149,7 +149,7 @@ def run_license_scan(label_status, label_bsx):
         ds_bien_so_raw = get_field_from_all_docs("thongtindangky", "biensoxe")
         ds_map_bien_so_phu_raw = get_field_from_all_docs("thongtindangky", "biensophu")
         ds_bien_so_phu_raw = [item["bienSo"] for item in ds_map_bien_so_phu_raw if item and "bienSo" in item]
-        ds_bien_so_khach_raw = get_field_from_all_docs("thongtinkhach", "bienso")
+        ds_bien_so_khach_raw = get_field_from_all_docs("thongtinkhach", "bienso") + get_field_from_all_docs("thongtinkhach", "biensoxe")
 
         ds_bien_so = [normalize_plate(val) for val in ds_bien_so_raw if val]
         ds_bien_so_phu = [normalize_plate(val) for val in ds_bien_so_phu_raw if val]

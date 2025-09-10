@@ -2,20 +2,25 @@ import tkinter as tk
 import subprocess
 import sys
 import cv2
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from io import BytesIO
 from firebase_service import FirebaseService
 from PIL import Image, ImageTk
-from xeVao import run_license_scan
+from XeMay.xeVao import run_license_scan
 import requests
 from tkinter import messagebox
 from firebase_admin import firestore
-from test import run_license_scan_ra
-# --- Hàm chạy file Python song song ---
-def run_file(file_path):
-    try:
-        subprocess.Popen([sys.executable, file_path])
-    except Exception as e:
-        tk.messagebox.showerror("Lỗi", f"Không thể chạy file {file_path}:\n{e}")
+from XeMay.nhanDienRa import run_license_scan_ra
+import json
+import threading
+
+# # --- Hàm chạy file Python song song ---
+# def run_file(file_path):
+#     try:
+#         subprocess.Popen([sys.executable, file_path])
+#     except Exception as e:
+#         tk.messagebox.showerror("Lỗi", f"Không thể chạy file {file_path}:\n{e}")
 
 
 def handle_image(image_path_or_url):
@@ -34,7 +39,7 @@ def handle_image(image_path_or_url):
         print(f"[ERROR] Không load được ảnh: {e}")
         return None
 
-def canvas_image(window, row, column=4, rowspan=1, columnspan=1, w=400, h=350):
+def canvas_image(window, row, column=4, rowspan=1, columnspan=1, w=350, h=300):
     canvas = tk.Canvas(window, width=w, height=h, bg="gray", highlightthickness=1, highlightbackground="black")
     canvas.grid(row=row, column=column, rowspan=rowspan, columnspan=columnspan, padx=10, pady=10)
 
@@ -52,7 +57,7 @@ def canvas_image(window, row, column=4, rowspan=1, columnspan=1, w=400, h=350):
 def load_image(canvas, img_path=""):
     canvas.delete("all")
     canvas.update_idletasks()
-    w, h =  400,350
+    w, h =  350,300
 
     if img_path:
         try:
@@ -82,8 +87,8 @@ def show_plate_on_canvas(canvas, best_plate):
     canvas.update_idletasks()  # bắt buộc cập nhật trước khi lấy size
     # w = canvas.winfo_width()
     # h = canvas.winfo_height()
-    w = 400
-    h = 350
+    w = 350
+    h = 300
     # if best_plate is None:
     #     canvas.create_text(
     #         w // 2, h // 2,
@@ -127,7 +132,7 @@ def label_custom_text(window, title, content, row, column,
     return text_widget
 
 
-def btn_quet_xe_vao():
+def btn_quet_xe_vao(window, canvas_plate_url_vao, canvas_face_url_vao, canvas_plate_url_ra, canvas_face_url_ra):
     # Gọi hàm lấy dữ liệu
     plate_img, face_img,timeIn,plate_text = run_license_scan( window)
 
@@ -145,13 +150,13 @@ def btn_quet_xe_vao():
     label_custom_text(window, "Thông báo", "Quét xe vào thành công",
                       row=0, column=2, width=25, height=3,
                       content_color="cyan")
-    window.after(5000, clear_data)
+    window.after(5000, lambda: clear_data(window, canvas_plate_url_vao, canvas_face_url_vao, canvas_plate_url_ra, canvas_face_url_ra))
 
 
-def btn_quet_xe_ra():
+def btn_quet_xe_ra(window, canvas_plate_url_vao, canvas_face_url_vao, canvas_plate_url_ra, canvas_face_url_ra):
     result = run_license_scan_ra(window)
 
-    if  result.get("success"):
+    if  not result.get("success"):
         label_custom_text(window, "Thông báo", result["message"],
                           row=0, column=2, width=25, height=3,
                           content_color="red")
@@ -188,11 +193,12 @@ def btn_quet_xe_ra():
             firebase_service.update_license_plate_field(bien_so, True)
             firebase_service.delete_license_plate(bien_so)
 
-        window.after(5000, clear_data)
+        window.after(5000, lambda: clear_data(window, canvas_plate_url_vao, canvas_face_url_vao, canvas_plate_url_ra, canvas_face_url_ra))
         return
 
     data = result["data"]
-    bien_so = data.get("bien_so") or data.get("biensoxe")
+    print("data xuất ra ", data)
+    bien_so = data["bien_so"] or data["biensoxe"]
     anh_xe_ra = data["anh_xe_ra"]
     timeIn = data["timeIn"]
     anh_xe_vao = data["anh_xe_vao"]
@@ -219,10 +225,10 @@ def btn_quet_xe_ra():
                       row=0, column=2, width=25, height=3,
                       content_color="cyan")
 
-    window.after(5000, clear_data)
+    window.after(5000, lambda: clear_data(window, canvas_plate_url_vao, canvas_face_url_vao, canvas_plate_url_ra, canvas_face_url_ra))
 
 
-def clear_data():
+def clear_data(window, canvas_plate_url_vao, canvas_face_url_vao, canvas_plate_url_ra, canvas_face_url_ra):
     # Xóa canvas (ảnh)
     canvas_plate_url_vao.delete("all")
     canvas_face_url_vao.delete("all")
@@ -237,78 +243,90 @@ def clear_data():
                       width=25, height=3)
     label_custom_text(window, "Thông báo", "",
                       row=0, column=2, width=25, height=3)
-def on_close():
+    
+def on_close(window):
     print("Đang thoát chương trình...")
+    with open("state.json", "w") as f:
+        json.dump({"AUTO": False}, f)
     window.destroy()   # đóng cửa sổ
-    sys.exit(0)        # thoát hẳn chương trình (nếu cần)
+    subprocess.run([sys.executable, "giaodienchinh.py"])
 
-# --- Tạo cửa sổ chính ---
-window = tk.Tk()
-window.title("Bãi giữ xe thông minh")
-
-# Thông báo
-label_bien_so_xe = label_custom_text(
-    window=window,
-    title="BSX",
-    content="---",
-    row=1,
-    column=2
-)
-
-label_thanh_tien = label_custom_text(window=window, title="Thành tiền", content="5000", row=0, column=4)
-
-label_thoi_gioi_vao = label_custom_text(
-    window=window,
-    title="Thời gian vào",
-    content="---",
-    row=0,
-    column=1
-)
-label_thoi_gioi_ra = label_custom_text(
-    window=window,
-    title="Thời gian ra",
-    content="---",
-    row=0,
-    column=3
-)
-label_thong_bao = label_custom_text(window=window, title="Thông báo", content="---", row=0, column=2)
-# Row 2: plate_url_vao
-canvas_plate_url_vao = canvas_image(window=window, row=2, column=0, columnspan=2)
-
-# Row 3: face_url_vao
-canvas_face_url_vao = canvas_image(window=window, row=3, column=0, columnspan=2)
+def btn_Qr():
+    subprocess.run([sys.executable, "QR_FCM/main_qr.py"])
 
 
+def run_main_xe_may():
+    # --- Tạo cửa sổ chính ---
+    window = tk.Tk()
+    window.title("Bãi giữ xe thông minh")
 
-# hinh plate_url ra
-canvas_plate_url_ra = canvas_image(window=window, row=2, column=3)
-# hinh face_url ra
-canvas_face_url_ra = canvas_image(window=window, row=3, column=3)
+    # Thông báo
+    label_bien_so_xe = label_custom_text(
+        window=window,
+        title="BSX",
+        content="---",
+        row=1,
+        column=2
+    )
 
-# --- Nút bấm ---
-btn1 = tk.Button(
-    window,
-    text="Quét xe máy vào",
-    font=("Arial", 16),
-    command=btn_quet_xe_vao,
-    width=20,
-    height=5,
-    bg='yellow'
-)
-btn1.grid(row=2, column=2, padx=10, pady=(10, 30))  # pady trên 10, dưới 30
+    label_thanh_tien = label_custom_text(window=window, title="Thành tiền", content="5000", row=0, column=4)
 
-btn2 = tk.Button(
-    window,
-    text="Quét xe máy ra",
-    font=("Arial", 16),
-    command=btn_quet_xe_ra,
-    width=20,
-    height=5,
-    bg='yellow'
-)
-btn2.grid(row=3, column=2, padx=10, pady=(30, 10))  # pady trên 30, dưới 10
+    label_thoi_gioi_vao = label_custom_text(
+        window=window,
+        title="Thời gian vào",
+        content="---",
+        row=0,
+        column=1
+    )
+
+    label_thoi_gioi_ra = label_custom_text(
+        window=window,
+        title="Thời gian ra",
+        content="---",
+        row=0,
+        column=3
+    )
+    label_thong_bao = label_custom_text(window=window, title="Thông báo", content="---", row=0, column=2)
+    # Row 2: plate_url_vao
+    canvas_plate_url_vao = canvas_image(window=window, row=2, column=0, columnspan=2)
+
+    # Row 3: face_url_vao
+    canvas_face_url_vao = canvas_image(window=window, row=3, column=0, columnspan=2)
 
 
-window.state('zoomed')
-window.protocol("WM_DELETE_WINDOW", on_close)
-window.mainloop()
+
+    # hinh plate_url ra
+    canvas_plate_url_ra = canvas_image(window=window, row=2, column=3)
+    # hinh face_url ra
+    canvas_face_url_ra = canvas_image(window=window, row=3, column=3)
+
+    # --- Nút bấm ---
+    btn1 = tk.Button(
+        window,
+        text="Quét xe máy vào",
+        font=("Arial", 16),
+        command=lambda: btn_quet_xe_vao(window=window, canvas_plate_url_vao=canvas_plate_url_vao, canvas_face_url_vao=canvas_face_url_vao, canvas_plate_url_ra=canvas_plate_url_ra, canvas_face_url_ra=canvas_face_url_ra),
+        width=20,
+        height=5,
+        bg='yellow'
+    )
+    btn1.grid(row=2, column=2, padx=10, pady=(10, 30))  # pady trên 10, dưới 30
+
+    btn2 = tk.Button(
+        window,
+        text="Quét xe máy ra",
+        font=("Arial", 16),
+        command=lambda: btn_quet_xe_ra(window=window, canvas_plate_url_vao=canvas_plate_url_vao, canvas_face_url_vao=canvas_face_url_vao, canvas_plate_url_ra=canvas_plate_url_ra, canvas_face_url_ra=canvas_face_url_ra),
+        width=20,
+        height=5,
+        bg='yellow'
+    )
+    btn2.grid(row=3, column=2, padx=10, pady=(30, 10))  # pady trên 30, dưới 10
+
+    btn3 = tk.Button(window, text="Quét QR", command=lambda: threading.Thread(target=btn_Qr).start(), width=20, height=5, bg="lightblue")
+    btn3.grid(row=1, column=3, padx=10, pady=(10, 10))  # pady trên 30, dưới 10
+
+
+    window.state('zoomed')
+    window.protocol("WM_DELETE_WINDOW", lambda: on_close(window=window))
+    window.mainloop()

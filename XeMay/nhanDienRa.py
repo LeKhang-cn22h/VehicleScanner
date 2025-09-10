@@ -1,5 +1,5 @@
 from datetime import datetime
-from nhanDien import detect_license_plate
+from XeMay.nhanDien import detect_license_plate
 from firebase_service import FirebaseService
 from face_detection.train_face import capture_face_and_upload
 from deepface import DeepFace
@@ -198,9 +198,6 @@ def run_license_scan_ra(root):
                     "mat_vao": url_khuonmatvao,
                     "time_now": datetime.now().strftime("%H:%M:%S")
                 }}
-
-
-
             firebase_service.update_license_plate_field(bien_so_quet, True)
             firebase_service.delete_license_plate(bien_so_quet)
 

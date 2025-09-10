@@ -4,7 +4,7 @@ from ultralytics import YOLO
 from tkinter import filedialog, Tk
 from mauXe.mauChuDaoXeOto import get_dominant_car_color
 from cloudinary_config import upload_image_to_cloudinary
-from nhanDien import detect_license_plate
+from xeoto.nhanDien import detect_license_plate
 
 
 def process_car_image():
@@ -27,8 +27,8 @@ def process_car_image():
     print("Link ảnh gốc Cloudinary:", original_url)
 
     # ========== Load model YOLO ==========
-    model = YOLO(r"../logoCar/runs/detect/train5/weights/best.pt")
-    plate_detector = YOLO(r"../train_bsx/runs/train/plate_detect4/weights/best.pt")
+    model = YOLO("logoCar/runs/detect/train5/weights/best.pt")
+    plate_detector = YOLO("train_bsx/runs/train/plate_detect4/weights/best.pt")
 
     frame = cv2.imread(file_path)
     results_ = plate_detector(frame, device=0)

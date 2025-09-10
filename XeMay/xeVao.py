@@ -6,7 +6,7 @@ import pytz
 import tkinter as tk
 import time
 
-from nhanDien import detect_license_plate
+from XeMay.nhanDien import detect_license_plate
 from firebase_hander import get_field_from_all_docs
 from face_detection.train_face import capture_face_and_upload
 from tkinter import messagebox
@@ -15,7 +15,7 @@ from io import BytesIO
 import requests
 
 FIREBASE_REALTIME_URL = 'https://tramxeuth-default-rtdb.firebaseio.com'
-cred = credentials.Certificate("../serviceAccountKey.json")
+cred = credentials.Certificate("serviceAccountKey.json")
 if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -202,18 +202,17 @@ def run_license_scan( root):
         ds_bien_so_raw = get_field_from_all_docs("thongtindangky", "biensoxe")
         ds_map_bien_so_phu_raw = get_field_from_all_docs("thongtindangky", "biensophu")
         ds_bien_so_phu_raw = [item["bienSo"] for item in ds_map_bien_so_phu_raw if item and "bienSo" in item]
+        ds_bien_so_khach_raw = get_field_from_all_docs("thongtinkhach", "bienso") + get_field_from_all_docs("thongtinkhach", "biensoxe")
 
         ds_bien_so = [normalize_plate(val) for val in ds_bien_so_raw if val]
         ds_bien_so_phu = [normalize_plate(val) for val in ds_bien_so_phu_raw if val]
+        ds_bien_so_khach = [normalize_plate(val) for val in ds_bien_so_khach_raw if val]
 
         hop_le = bien_so_quet in ds_bien_so
         hop_le_phu = bien_so_quet in ds_bien_so_phu
+        hop_le_khach = bien_so_quet in ds_bien_so_khach
 
-
-
-        if hop_le or hop_le_phu:
-
-
+        if hop_le or hop_le_phu or hop_le_khach:
 
             # Ghi Firestore
             today = datetime.today().strftime("%d%m%Y")
@@ -256,11 +255,7 @@ def run_license_scan( root):
 
             return url_image_detected, image_url_vao, time_now,bien_so_quet
 
-
-
-
         else:
-
 
             # Hỏi có muốn đăng ký khách không
             answer = messagebox.askyesno("Đăng ký khách", "Bạn có muốn đăng ký biển số xe với tư cách là khách không?")

@@ -17,3 +17,4 @@ scikit-learn
 webcolors==1.11.1
 deepface
 pillow
+pyinstaller

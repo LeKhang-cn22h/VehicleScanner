@@ -4,7 +4,7 @@ import requests
 from io import BytesIO
 import threading
 from datetime import datetime
-from nhanDien import detect_license_plate
+from XeMay.nhanDien import detect_license_plate
 from firebase_service import FirebaseService
 from face_detection.train_face import capture_face_and_upload
 from deepface import DeepFace

@@ -2,7 +2,7 @@ import tkinter as tk
 import threading
 import time
 from datetime import datetime
-from nhanDien import detect_license_plate
+from xeoto.nhanDien import detect_license_plate
 from firebase_service import FirebaseService
 from firebase_admin import firestore
 import torchvision.transforms as transforms
@@ -10,9 +10,9 @@ from PIL import Image
 from torchvision.models import resnet18, ResNet18_Weights
 import cv2
 from ultralytics import YOLO
-from  ketQuaXeOtoRa import process_car_image
+from  xeoto.ketQuaXeOtoRa import process_car_image
 import torch.nn as nn
-import utils
+import xeoto.utils as utils
 import requests
 import numpy as np
 # Hàm kiểm tra và cập nhật số lượt khi ra
@@ -316,7 +316,7 @@ def run_license_scan(label_status, root, label_bsx):
                 timeline_data = doc_snapshot.to_dict()
                 hinhdauxevao = timeline_data.get("hinhxevao")
                 logovao = timeline_data.get("logovao")
-                logovao = logovao[0]
+                logovao = logovao[0] if logovao else None
                 hinhduoixevao = timeline_data.get("biensoxevao")
 
                 print("Hình đầu xe vào:", hinhdauxevao)
@@ -366,23 +366,25 @@ def run_license_scan(label_status, root, label_bsx):
                 # So sánh link_goc và hinhxevao
                 # ================================
         if link_goc and hinhdauxevao:
-            same_car, distance = compare_images(link_goc, hinhdauxevao, model_path="../siamese_model.pth",
+            same_car, distance = compare_images(link_goc, hinhdauxevao, model_path="siamese_model.pth",
                                         threshold=0.5)
             if same_car:
                 print("✅ Ảnh cùng xe")
             else:
                     print("❌ Ảnh khác xe")
         else:
-                print("Không có đủ ảnh để so sánh")
+            same_car = False    
+            print("Không có đủ ảnh để so sánh")
 
         if logovao is not None and image_logo is not None:
-            same_logo, distance_logo = compare_images(logovao, image_logo, model_path="../siamese_model.pth",
+            same_logo, distance_logo = compare_images(logovao, image_logo, model_path="siamese_model.pth",
                                                         threshold=0.5)
             if same_logo:
                 print("✅ Logo cùng xe")
             else:
                 print("❌ Logo khác xe")
         else:
+            same_logo = False
             print("Không có đủ ảnh logo để so sánh")
         #logovao
 
@@ -395,8 +397,6 @@ def run_license_scan(label_status, root, label_bsx):
             if trangthai is True:
                 # Nếu trạng thái True, cảnh báo
                 firebase_service.update_canhbao(bien_so_quet, True)
-                print("Xe đã ra trước đó, đã gửi cảnh báo.")
-                print("Biển số có 'trangthai' = False.")
                 break
 
             # Kiểm tra số lượt có hợp lệ ko
@@ -412,7 +412,8 @@ def run_license_scan(label_status, root, label_bsx):
         if same_car and same_logo and trangthai and is_hople:
             firebase_service.update_license_plate_field(bien_so_quet, True)
             firebase_service.delete_license_plate(bien_so_quet)
-
+            utils.update_label_content(label_status, f"Xe biển số {bien_so_quet} hợp lệ. Được phép ra", bg="green")
+            time.sleep(1)
             # Lấy document xe
             doc = xe_doc_ref.get()
             if doc.exists:
@@ -431,13 +432,20 @@ def run_license_scan(label_status, root, label_bsx):
             if timeline_ref:
                 timeline_ref.set({
                     "timeout": time_now,
-                    "biensoxera": url_image_detected
+                    "biensoxera": url_image_detected,
+                    "hinhxera" : link_goc,
+                    "logora" : link_crops,
                 }, merge=True)
                 print(f"Đã cập nhật timeline {timeline_doc_id}")
             else:
                 print("Không tìm thấy timeline để cập nhật.")
             time.sleep(2)  # delay để người dùng thấy thông báo
-            break
+        else:
+            utils.update_label_content(label_status, f"Xe biển số {bien_so_quet} không hợp lệ!!!", bg="red")
+            time.sleep(1)
+            pass
+        break
+
     data_xe_vao = utils.DataXeVao(
         hinh_dau_xe=hinhdauxevao,
         hinh_duoi_xe=hinhduoixevao,
