@@ -29,3 +29,5 @@ dist/
 **/dataset/
 **/Datasets/
 .idea/
+Dataset_Siamese/
+TrainVungKyTu/dataset_split/

@@ -11,6 +11,40 @@ from deepface import DeepFace
 from firebase_admin import firestore
 import time
 
+# Hàm kiểm tra và cập nhật số lượt khi ra
+def update_soluot_khira(bien_so_xe):
+    db = firestore.client()
+    doc_col = db.collection("thongtindangky")
+    xe_doc_ref = doc_col.get()
+    for xe_doc in xe_doc_ref:
+        xe_data = xe_doc.to_dict()
+        ds_bien_so_xe = [xe_doc['biensoxe'], xe_doc['biensophu']['bienSo']]
+        if bien_so_xe in ds_bien_so_xe:
+            so_luot_moi = xe_data['luot'] - 1
+            if so_luot_moi >= 0:
+                update_xe_doc_ref = doc_col.document(xe_doc.id)
+                update_xe_doc_ref.update({"luot":so_luot_moi})
+                print("Số lượt hợp lệ. Cho xe ra")
+                return True
+            else:
+                print("Số lượt ko đủ. Bạn cần mua thêm lượt")
+                return False
+    return False
+
+def is_khach_uutien(bien_so_xe):
+    db = firestore.client()
+    doc_col = db.collection("thongtinkhach")
+    xe_doc_ref = doc_col.get()
+    for xe_doc in xe_doc_ref:
+        xe_data = xe_doc.to_dict()
+        if bien_so_xe == xe_data['bienso']:
+            if xe_data['uutien']:
+                return True
+            else:
+                return False
+    return False
+
+
 # =====================
 # Hàm xử lý quét và so khớp
 # =====================
@@ -43,6 +77,17 @@ def run_license_scan_ra(label_status, canvas_old, canvas_new,root):
 
             time.sleep(2)
             continue
+
+        # Kiểm tra có phải khách ưu tiên ko
+        is_khach_uu_tien = is_khach_uutien(bien_so_quet)
+        if not is_khach_uu_tien:
+            # Kiểm tra số lượt có hợp lệ ko
+            is_hople = update_soluot_khira(bien_so_quet)
+            if not is_hople:
+                label_status.config(text=f"Số lượt ra còn lại của biển số {bien_so_quet} không đủ ❌", bg="yellow")
+                label_status.update()
+                time.sleep(2)
+                break
 
         # 4. Lấy timeline gần nhất
         today = datetime.today().strftime("%d%m%Y")

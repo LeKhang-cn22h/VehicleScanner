@@ -192,7 +192,7 @@ def btn_quet_xe_ra():
         return
 
     data = result["data"]
-    bien_so = data["bien_so"]
+    bien_so = data.get("bien_so") or data.get("biensoxe")
     anh_xe_ra = data["anh_xe_ra"]
     timeIn = data["timeIn"]
     anh_xe_vao = data["anh_xe_vao"]
@@ -237,10 +237,14 @@ def clear_data():
                       width=25, height=3)
     label_custom_text(window, "Thông báo", "",
                       row=0, column=2, width=25, height=3)
+def on_close():
+    print("Đang thoát chương trình...")
+    window.destroy()   # đóng cửa sổ
+    sys.exit(0)        # thoát hẳn chương trình (nếu cần)
+
 # --- Tạo cửa sổ chính ---
 window = tk.Tk()
 window.title("Bãi giữ xe thông minh")
-window.geometry("300x250")
 
 # Thông báo
 label_bien_so_xe = label_custom_text(
@@ -306,4 +310,5 @@ btn2.grid(row=3, column=2, padx=10, pady=(30, 10))  # pady trên 30, dưới 10
 
 
 window.state('zoomed')
+window.protocol("WM_DELETE_WINDOW", on_close)
 window.mainloop()

@@ -196,6 +196,7 @@ def run_license_scan( root):
         # lấy từ nhận diện biển số xe
         bien_so, url_image_detected = detect_license_plate()
         bien_so_quet = normalize_plate(bien_so)
+        print("Biển số quét được:", bien_so_quet)
 
         # Kiểm tra hợp lệ
         ds_bien_so_raw = get_field_from_all_docs("thongtindangky", "biensoxe")

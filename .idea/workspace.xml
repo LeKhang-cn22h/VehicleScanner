@@ -5,9 +5,174 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55f49ab4-85dd-4c5d-bddc-55d44fc1defc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Training_Report_siamese.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/akwiyho8s2soeafo9loi.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bearden.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bearnau.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bearnauB.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bimec6qmxhakxymhuiub.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cbihquf01twthdvzflcx.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clear.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dau.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dgjz8crojdwadmpk8yuz.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/duoi.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/epqfv96tqyfjrrlyn674.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ezskaqwv9kemyh87k9wl.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/f6vjbp29qh45dtm3uqre.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmmdhh3co3oj6qvyaaww.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/g9vajt4mg0tquanqygjj.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gnullrdkyd8ab0pbmfhi.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hojducizqhye1djf9dqy.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/iasq4q0azk6ksoi6n20g.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ioiiec2foeaee4veqxke.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/iu2p96xiyvdudtelugde.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kbgjy7oefln4yklqkhge.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logoCar/TestLogoCar.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logoCar/TrainLogoCar.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logoaudi.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loss_chart_siamese.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mmyxnensdjeyxachrskr.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nj4q0bdlneigofj83rng.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nz8tuvn8w6ivhfgq79iv.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/orw2prlebdjwk4dbjxop.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/otodau.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/otoduoi.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pese0wczdb7i65mwompx.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkhcqcktbsehdajoxrir.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ps7wqzdmnfiiacavdpwa.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qg2px5z2rj1gv8zukuwq.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qvenhypjw26zfcoljvkj.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/BoxF1_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/BoxPR_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/BoxP_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/BoxR_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/args.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/confusion_matrix.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/confusion_matrix_normalized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/epoch_metrics.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/labels_correlogram.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/lr_pg0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/lr_pg1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/lr_pg2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/metrics_mAP50(B).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/metrics_mAP50-95(B).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/metrics_precision(B).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/metrics_recall(B).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/results.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/results.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/time.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_batch0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_batch1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_batch2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_batch30690.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_batch30691.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_batch30692.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_box_loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_cls_loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/train_dfl_loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/training_report.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_batch0_labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_batch0_pred.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_batch1_labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_batch1_pred.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_batch2_labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_batch2_pred.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_box_loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_cls_loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/val_dfl_loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/weights/best.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runs/train/logo_experiment/weights/last.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/siamese_model.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/snm8y3atsebw9tlgi2jn.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testsiamese.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tjkucbqrrjsxn6ljy6au.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/BoxF1_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/BoxPR_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/BoxP_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/BoxR_curve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/confusion_matrix.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/confusion_matrix_normalized.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/labels_correlogram.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/results.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/results.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/train_batch0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/train_batch1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/train_batch2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/train_batch5130.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/train_batch5131.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/train_batch5132.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/val_batch0_labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/val_batch0_pred.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/val_batch1_labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/val_batch1_pred.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/val_batch2_labels.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/val_batch2_pred.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/weights/best.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/weights/last.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/train_siamese.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ts1vhkagttrihdnygkkd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vb35jcowjsy1dg019nue.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vwbly0dm0grezgrmmq25.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wbpgiaca8kgdxgr3tbys.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wzfxoeklstonvje6dnjv.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xe1 (4).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xe1B.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xe97B.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xemay.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xemay1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xemaya.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xeoto/state.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xeoto/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xxumpgcejpyrkdlzgeuc.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yolo11n.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziva3yea1bslaqnjq0xw.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/XeMay/giaoDienXeMay.py" beforeDir="false" afterPath="$PROJECT_DIR$/XeMay/giaoDienXeMay.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XeMay/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/XeMay/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XeMay/nhanDien.py" beforeDir="false" afterPath="$PROJECT_DIR$/XeMay/nhanDien.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XeMay/xeRa.py" beforeDir="false" afterPath="$PROJECT_DIR$/XeMay/xeRa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XeMay/xeVao.py" beforeDir="false" afterPath="$PROJECT_DIR$/XeMay/xeVao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/createfolder.py" beforeDir="false" afterPath="$PROJECT_DIR$/createfolder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firebase_hander.py" beforeDir="false" afterPath="$PROJECT_DIR$/firebase_hander.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firebase_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/firebase_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main2.py" beforeDir="false" afterPath="$PROJECT_DIR$/main2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nhan_dien_vao.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhan_dien_vao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/BoxF1_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/BoxPR_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/BoxP_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/BoxR_curve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/args.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train7/args.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/confusion_matrix.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/confusion_matrix_normalized.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/results.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/results.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/train_batch0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/train_batch1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/train_batch2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/train_batch3240.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/train_batch3241.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/train_batch3242.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/val_batch0_labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/val_batch0_pred.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/val_batch1_labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/val_batch1_pred.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/val_batch2_labels.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/val_batch2_pred.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/weights/best.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/runs/detect/train/weights/last.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainVungKyTu/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainVungKyTu/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/giaoDienXeOto.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/giaoDienXeOto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/ketQuaXeOtoRa.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/ketQuaXeOtoRa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/ketQuaXeOtoVao.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/ketQuaXeOtoVao.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/nhanDien.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/nhanDien.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/xeRa.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/xeRa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xeoto/xeVao.py" beforeDir="false" afterPath="$PROJECT_DIR$/xeoto/xeVao.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,31 +200,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.TrainLogo.executor&quot;: &quot;Run&quot;,
-    &quot;Python.giaoDienXeMay.executor&quot;: &quot;Run&quot;,
-    &quot;Python.ketQuaDauXe.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main1.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mauChuDaoXeOto.executor&quot;: &quot;Run&quot;,
-    &quot;Python.nhanDien.executor&quot;: &quot;Run&quot;,
-    &quot;Python.nhan_dien_logo.executor&quot;: &quot;Run&quot;,
-    &quot;Python.nhan_dien_vao.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.train.executor&quot;: &quot;Run&quot;,
-    &quot;Python.train_face.executor&quot;: &quot;Run&quot;,
-    &quot;Python.train_seamese.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xeRa.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xeVao.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/TramRaVao/BaiGiuXe/VehicleScanner/xeoto&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.TrainLogo.executor": "Run",
+    "Python.giaoDienXeMay.executor": "Run",
+    "Python.giaoDienXeOto.executor": "Run",
+    "Python.ketQuaDauXe.executor": "Run",
+    "Python.ketQuaXeOtoVao.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.main1.executor": "Run",
+    "Python.mauChuDaoXeOto.executor": "Run",
+    "Python.nhanDien.executor": "Run",
+    "Python.nhan_dien_logo.executor": "Run",
+    "Python.nhan_dien_vao.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.train.executor": "Run",
+    "Python.train_face.executor": "Run",
+    "Python.train_seamese.executor": "Run",
+    "Python.xeRa.executor": "Run",
+    "Python.xeVao.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging master",
+    "last_opened_file_path": "D:/TramRaVao/BaiGiuXe/VehicleScanner/xeoto"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\TramRaVao\BaiGiuXe\VehicleScanner\xeoto" />
