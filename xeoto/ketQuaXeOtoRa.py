@@ -2,7 +2,6 @@ import cv2
 import os
 from ultralytics import YOLO
 from tkinter import filedialog, Tk
-from mauXe.mauChuDaoXeOto import get_dominant_car_color
 from cloudinary_config import upload_image_to_cloudinary
 from xeoto.nhanDien import detect_license_plate
 
@@ -71,13 +70,6 @@ def process_car_image():
 
     print("Tất cả crop logo đã upload:", crop_urls)
 
-    # ========== Lấy màu chủ đạo của xe ==========
-    colors = get_dominant_car_color(file_path)
-    print("Màu chủ đạo của xe:", colors)
-
-    # Xóa file gốc local (sau khi upload)
-    # os.remove(file_path)
-
     # return cho file khác sử dụng
-    return original_url, crop_urls, colors, file_path, best_plate, crop
+    return original_url, crop_urls, file_path, best_plate, crop
 

@@ -254,13 +254,10 @@ def click_auto(btnAuto):
 
 def on_close(window):
     print("Đang thoát chương trình...")
-    base_path = os.path.dirname(sys.executable) if getattr(sys, "frozen", False) else os.path.dirname(os.path.abspath(__file__))
-    state_path = os.path.join(base_path, "state.json")
-    data = {"AUTO": False}  # ví dụ cập nhật
     with open("state.json", "w") as f:
-        json.dump({"AUTO": autoData}, f)
-    window.destroy()   # đóng cửa sổ
-    subprocess.run([sys.executable, "giaodienchinh.py"])
+        json.dump({"AUTO": False}, f)
+    window.destroy()
+    os._exit(0)
 
 def btn_Qr():
     subprocess.run([sys.executable, "QR_FCM/main_qr.py"])

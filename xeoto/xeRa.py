@@ -261,7 +261,7 @@ def run_license_scan(label_status, root, label_bsx):
             continue
 
         # Sau khi qua bước trên mới tới process_car_image
-        link_goc, link_crops, mau, image_dau_xe, bsx_dau, image_logo = process_car_image()
+        link_goc, link_crops, image_dau_xe, bsx_dau, image_logo = process_car_image()
         # if not plate_text:
         #     label_status.config(text="Không đọc được biển số từ process_car_image", bg="red")
         #     label_status.update()

@@ -248,8 +248,8 @@ def on_close(window):
     print("Đang thoát chương trình...")
     with open("state.json", "w") as f:
         json.dump({"AUTO": False}, f)
-    window.destroy()   # đóng cửa sổ
-    subprocess.run([sys.executable, "giaodienchinh.py"])
+    window.destroy()
+    os._exit(0)
 
 def btn_Qr():
     subprocess.run([sys.executable, "QR_FCM/main_qr.py"])

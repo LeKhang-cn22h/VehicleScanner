@@ -69,7 +69,7 @@ def on_create(db: Client, biensoxe, url_image_detected, uutien = False):
     xe_doc_ref.set({"solanvao": solanvao + 1}, merge=True)
 
     # Lấy dữ liệu từ process_car_image
-    link_goc, link_crops, mau, image_dau_xe, bsx_dau, image_logo = process_car_image()
+    link_goc, link_crops, image_dau_xe, bsx_dau, image_logo = process_car_image()
 
     # Ghi timeline
     time_now = datetime.now().strftime("%H:%M:%S")
@@ -173,7 +173,7 @@ def run_license_scan(label_status, label_bsx):
             xe_doc_ref.set({"solanvao": solanvao + 1}, merge=True)
 
             # Lấy dữ liệu từ process_car_image
-            link_goc, link_crops, mau, image_dau_xe, bsx_dau, image_logo = process_car_image()
+            link_goc, link_crops, image_dau_xe, bsx_dau, image_logo = process_car_image()
 
             # Ghi timeline
             time_now = datetime.now().strftime("%H:%M:%S")

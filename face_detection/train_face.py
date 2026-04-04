@@ -15,7 +15,7 @@ def capture_face_and_upload():
 
     result_url = None
     last_capture_time = 0
-    capture_interval = 10  # giây
+    capture_interval = 2  # ← giảm từ 10 xuống 2 giây
 
     while True:
         ret, frame = cap.read()
@@ -23,18 +23,17 @@ def capture_face_and_upload():
             print("Không thể chụp ảnh từ camera")
             break
 
-        cv2.imshow("Camera", frame)
+        cv2.imshow("Camera - Nhìn vào camera", frame)  # ← thêm hướng dẫn
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):
             break
 
-        # Kiểm tra khuôn mặt mỗi 5 giây
         if time.time() - last_capture_time >= capture_interval:
             last_capture_time = time.time()
             try:
                 faces = DeepFace.extract_faces(frame, detector_backend="opencv")
-                if len(faces) > 0:
-                    print("✅ Phát hiện khuôn mặt!")
+                if faces:
+                    print("✅ Phát hiện khuôn mặt! Đang chụp...")
 
                     img_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
                     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
@@ -45,10 +44,13 @@ def capture_face_and_upload():
                         os.remove(temp_file.name)
 
                     result_url = result.get("secure_url") if result else None
-                    break
+                    break  # ← tự thoát sau khi chụp
+
+                else:
+                    print("⏳ Chưa phát hiện khuôn mặt, thử lại...")
 
             except Exception:
-                pass
+                print("⏳ Không nhận diện được, thử lại...")
 
     cap.release()
     cv2.destroyAllWindows()
